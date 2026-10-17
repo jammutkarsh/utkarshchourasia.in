@@ -59,14 +59,14 @@ if ((${#pathspecs[@]})); then
 fi
 
 # 3. Regenerate the lockfile instead of hand-merging it.
-if git diff --name-only --diff-filter=U | grep -qx 'package-lock.json'; then
+if git diff --name-only --diff-filter=U | grep -qx 'bun.lock'; then
 	if git diff --name-only --diff-filter=U | grep -qx 'package.json'; then
-		echo "  package-lock.json: resolve package.json first, then run: npm install && git add package-lock.json"
+		echo "  bun.lock: resolve package.json first, then run: bun install && git add bun.lock"
 	else
-		git checkout --ours -- package-lock.json
-		npm install --package-lock-only --no-audit --no-fund >/dev/null
-		git add package-lock.json
-		echo "  regenerated package-lock.json"
+		git checkout --ours -- bun.lock
+		bun install --lockfile-only >/dev/null
+		git add bun.lock
+		echo "  regenerated bun.lock"
 	fi
 fi
 
@@ -79,8 +79,8 @@ if [[ -n "$conflicts" ]]; then
 fi
 cat <<'NEXT'
 Next steps:
-  npm install
-  npm run check && npx tsc --noEmit && npm run build
+  bun install
+  bun run check && bunx tsc --noEmit && bun run build
   git commit          # completes the merge
   (or `git merge --abort` to undo)
 NEXT

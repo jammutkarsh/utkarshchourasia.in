@@ -15,13 +15,13 @@ Based on [dlarroder/dalelarroder](https://github.com/dlarroder/dalelarroder). Se
 ```bash
 git clone https://github.com/jammutkarsh/fork-portfolio
 cd fork-portfolio
-npm install
+bun install
 ```
 
 2. Run the development server
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ## Writing content

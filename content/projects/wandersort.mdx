@@ -1,0 +1,33 @@
+---
+name: WanderSort
+hero: /static/images/project/wandersort/hero.webp
+repo: https://github.com/jammutkarsh/wandersort
+install: go install github.com/jammutkarsh/wandersort@latest
+stack: [Go, Bubble Tea, SQLite, Cobra, BLAKE3, ExifTool]
+summary: A local-first media organiser that scans messy photo and video dumps and plans a clean, human-readable folder tree, with no cloud and no AI.
+order: 1
+architecture:
+  - title: From a pile of files to a library
+    source: |
+      flowchart LR
+        add["add: scan + fingerprint"] --> group["group duplicates, RAW + JPG, Live Photos"]
+        group --> plan["plan the folder tree"]
+        plan --> organise["organise: correct the plan"]
+        organise --> copy["copy into the library"]
+        copy --> check["check: verify later"]
+---
+
+Years of photos end up spread across phones, SD cards and old drives: three copies of the
+same picture, RAW and JPG files separated from each other, Live Photos split into a
+`.HEIC`, a `.MOV` and an `.AAE`, and edited versions sitting next to the originals with no
+way to tell which is which. Finding one clip means digging through `DCIM`, `Backup` and
+`New Folder (2)`.
+
+WanderSort fingerprints every file, works out which ones are duplicates or belong
+together, and plans a folder tree you can read, such as `2024/08_August/02_04/<city>/`.
+You review and correct the plan before anything is copied, and `check` later proves
+nothing in the library has rotted. Everything runs on your machine in one Go binary, so
+there are no uploads, no subscriptions, and no AI deciding what is relevant.
+
+It runs as a full-screen TUI, or step by step with `add`, `organise` and `copy`. The
+last three also run unattended from cron, with documented exit codes.

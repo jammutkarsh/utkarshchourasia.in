@@ -1,0 +1,21 @@
+---
+name: GFStat
+hero: /static/images/project/gfstat/hero.webp
+repo: https://github.com/jammutkarsh/gfstat
+website: https://gfstat.utkarshchourasia.in
+stack: [SvelteKit, TypeScript, Cloudflare Pages, Cloudflare KV, GitHub OAuth]
+summary: See who follows you back on GitHub, who doesn't, and follow or unfollow from the same page.
+order: 4
+---
+
+GitHub shows your followers and the people you follow as two separate lists, and gives
+no way to compare them. Working out who doesn't follow you back means paging through
+both by hand.
+
+GFStat signs you in with GitHub and compares the two lists for you: mutuals, people who
+don't follow you back, and people you don't follow back. You can follow or unfollow
+straight from the results.
+
+It is a server-rendered SvelteKit app on Cloudflare Pages, with sessions kept in
+Cloudflare KV and plain `fetch` calls against the GitHub REST API. The UI uses my own
+design system, utc-ds.

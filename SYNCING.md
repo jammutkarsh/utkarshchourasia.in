@@ -10,8 +10,8 @@ stays a small, mostly automatic merge.
 git checkout -b sync/upstream-$(date +%Y%m%d)   # work on a branch, not the live one
 scripts/sync-upstream.sh                        # fetch + merge, leaves it uncommitted
 # resolve anything it lists, then:
-npm install
-npm run check && npx tsc --noEmit && npm run build
+bun install
+bun run check && bunx tsc --noEmit && bun run build
 git commit                                      # finish the merge, then open a PR
 ```
 
@@ -25,7 +25,7 @@ branch and can't apply the rules below.
 | Upstream edits a file this fork deleted | Kept deleted |
 | Upstream adds or edits files under a removed feature (`.upstream-exclude`) | Dropped |
 | Both sides edit a fork-owned file (`merge=ours` in `.gitattributes`) | Our version is kept |
-| `package-lock.json` conflicts | Regenerated with `npm install` (after `package.json` is resolved) |
+| `bun.lock` conflicts | Regenerated with `bun install` (after `package.json` is resolved) |
 | Upstream edits `app/thoughts/*` | Git follows the rename into `app/blogs/*` |
 
 Anything else that conflicts is listed at the end for you to resolve by hand.
@@ -73,6 +73,6 @@ gray and black map onto the utc-ds tokens)
 - Add styles to `app/site.css`. In `app/tailwind.css`, only the `@theme` colours differ
   from upstream (they come from utc-ds); leave the rest identical.
 - Don't reformat or reorder upstream files. Biome uses upstream's config, so
-  `npm run lint` keeps the formatting the same.
+  `bun run lint` keeps the formatting the same.
 - If you drop another upstream feature, add its paths to `.upstream-exclude`.
   If you take over an upstream file completely, add it to `.gitattributes` with `merge=ours`.

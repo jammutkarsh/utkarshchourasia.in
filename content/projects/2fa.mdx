@@ -1,0 +1,23 @@
+---
+name: 2FA
+hero: /static/images/project/2fa/hero.webp
+repo: https://github.com/jammutkarsh/2fa
+install: go install github.com/jammutkarsh/2fa@latest
+stack: [Go, GoReleaser]
+summary: A fork of Russ Cox's command-line 2FA tool, extended with fuzzy name matching, automatic clipboard copy and import from 2FAS.
+order: 5
+---
+
+This is a fork of [rsc/2fa](https://github.com/rsc/2fa), a small command-line
+authenticator that keeps your TOTP keys in `~/.2fa` and prints the current code for one
+of them. I wanted to use it every day, so I added the parts that were slowing me down:
+
+- **Fuzzy matching:** `2fa git` finds `github` without typing the full name. One match
+  prints its code, several matches list all of theirs.
+- **Clipboard:** a single match is copied to the clipboard, so the next step is paste.
+- **Import:** `2fa -import 2fas export.json` brings in keys from a 2FAS export and skips
+  ones that already exist.
+- **Releases:** a GoReleaser workflow builds the binaries for each tagged release.
+
+The keychain is still an unencrypted text file, the same as upstream, so it is meant for
+a machine you already trust.

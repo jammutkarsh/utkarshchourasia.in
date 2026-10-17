@@ -52,7 +52,10 @@ export function createMetadata({
 	return {
 		title,
 		description,
-		alternates: { canonical: path },
+		alternates: {
+			canonical: path,
+			types: { 'application/rss+xml': '/rss.xml' },
+		},
 		openGraph,
 		twitter: {
 			card: 'summary_large_image',

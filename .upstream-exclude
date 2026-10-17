@@ -33,7 +33,3 @@ app/components/analytics/log-rocket.tsx
 app/components/layouts/section-container.tsx
 app/components/layouts/icons/arrow-down-icon.tsx
 app/blog/[slug]/table-of-contents.tsx
-
-# Upstream uses bun; this fork uses npm (package-lock.json)
-bun.lock
-bun.lockb

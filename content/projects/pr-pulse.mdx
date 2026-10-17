@@ -1,0 +1,29 @@
+---
+name: PR Pulse
+hero: /static/images/project/pr-pulse/hero.webp
+repo: https://github.com/jammutkarsh/pr-pulse
+website: https://prpulse.utkarshchourasia.in
+stack: [Svelte, TypeScript, Tailwind CSS, Vite, Chrome Extension, Firefox Add-on]
+summary: A Chrome and Firefox extension that puts all your GitHub pull requests in one dashboard, so you stop clicking through repositories.
+order: 2
+screenshots:
+  - src: /static/images/project/pr-pulse/popup.webp
+    caption: The toolbar popup, over any GitHub page
+  - src: /static/images/project/pr-pulse/settings.webp
+    caption: Settings for the default view, Jira links and refresh interval
+---
+
+GitHub is good at showing one pull request at a time and poor at showing everything that
+needs your attention. Checking on your PRs means opening a repository, finding Pull
+Requests, opening one, going back, switching repositories and repeating, and every step
+is another page load.
+
+PR Pulse collapses that into one dashboard in your browser toolbar. It lists the pull
+requests you opened and the ones waiting on your review, with checks and review status,
+the diff size and the branch on each card, and it can link branch names to Jira tickets.
+A background worker keeps the data fresh on an interval you choose, and you only jump
+into GitHub when a pull request needs a closer look.
+
+It is an extension, not a hosted service. Your GitHub token stays in the browser's
+extension storage and data comes straight from the GitHub API, so nothing passes through
+a third-party server.
