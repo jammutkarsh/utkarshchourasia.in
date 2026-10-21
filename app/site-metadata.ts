@@ -18,7 +18,9 @@ const siteMetadata = {
 	siteUrl: getDeploymentURL(),
 	siteRepo: 'https://github.com/jammutkarsh/fork-portfolio',
 	siteLogo: '/static/favicons/favicon.png',
-	image: '/images/avatar.png',
+	// A 1024px copy of avatar.png: the site is static, so images aren't resized
+	// on request.
+	image: '/images/avatar.webp',
 	email: 'mail@utkarshchourasia.in',
 	github: 'https://github.com/jammutkarsh',
 	twitter: 'https://twitter.com/jammutkarsh',
