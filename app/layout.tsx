@@ -12,6 +12,7 @@ import { AmbienceProvider } from './components/layouts/ambience';
 import { FrameProvider } from './components/layouts/frame';
 import SiteFooter from './components/layouts/site-footer';
 import SiteNav from './components/layouts/site-nav';
+import PageTransitions from './components/page-transitions';
 import { ViewTransition } from './components/view-transition';
 import { inter, jetbrainsMono } from './fonts';
 import { getProjects } from './projects/utils';
@@ -112,10 +113,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
 									<SiteNav />
 									{/* Page content crossfades on navigation; nav/footer stay put. */}
 									<ViewTransition default='page'>
-										<div className='flex flex-1 flex-col'>{children}</div>
+										<div className='flex flex-1 flex-col' data-vt='page'>
+											{children}
+										</div>
 									</ViewTransition>
 									<SiteFooter />
 								</div>
+								<PageTransitions />
 								<CommandMenu
 									posts={commandMenuPosts}
 									projects={getProjects().map(({ slug, name }) => ({

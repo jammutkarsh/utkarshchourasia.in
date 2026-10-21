@@ -49,6 +49,22 @@ html {
 	}
 }
 
+/*
+  Names that React's <ViewTransition> would set, applied by hand while
+  PageTransitions (app/components/page-transitions.tsx) runs a navigation.
+  Temporary: remove with that component once vinext supports view
+  transitions (https://github.com/cloudflare/vinext/issues/2603).
+*/
+html.page-navigating [data-vt="page"] {
+	view-transition-name: page;
+	view-transition-class: page;
+}
+
+html.page-navigating [data-vt="nav-indicator"] {
+	view-transition-name: nav-indicator;
+	view-transition-class: nav-indicator;
+}
+
 /* Theme toggle: switch off the default crossfade; the reveal runs from JS. */
 html.theme-switching::view-transition-old(root),
 html.theme-switching::view-transition-new(root) {
