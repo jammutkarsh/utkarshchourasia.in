@@ -1,18 +1,18 @@
-import { GoogleTagManager } from '@next/third-parties/google';
-import Analytics from 'app/components/analytics/analytics';
 import JsonLd from 'app/components/json-ld';
 import LenisProvider from 'app/components/providers/LenisProvider';
 import ThemeProvider from 'app/components/providers/ThemeProvider';
 import { createMetadata } from 'app/lib/create-metadata';
 import siteMetadata from 'app/site-metadata';
 import type { Metadata } from 'next';
-import { type ReactNode, ViewTransition } from 'react';
+import Script from 'next/script';
+import type { ReactNode } from 'react';
 import { getPosts } from './blogs/utils';
 import CommandMenu from './components/command-menu';
 import { AmbienceProvider } from './components/layouts/ambience';
 import { FrameProvider } from './components/layouts/frame';
 import SiteFooter from './components/layouts/site-footer';
 import SiteNav from './components/layouts/site-nav';
+import { ViewTransition } from './components/view-transition';
 import { inter, jetbrainsMono } from './fonts';
 import { getProjects } from './projects/utils';
 import './tailwind.css';
@@ -96,7 +96,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 				<JsonLd data={websiteJsonLd} />
 			</head>
 			<body className='antialiased'>
-				<GoogleTagManager gtmId='G-65F69D270G' />
+				<Script id='gtm-init'>
+					{`window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':Date.now(),event:'gtm.js'});`}
+				</Script>
+				<Script src='https://www.googletagmanager.com/gtm.js?id=G-65F69D270G' />
 				<ThemeProvider
 					attribute={['class', 'data-theme']}
 					defaultTheme='dark'
@@ -123,7 +126,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
 							</AmbienceProvider>
 						</FrameProvider>
 					</LenisProvider>
-					{process.env.NODE_ENV === 'production' && <Analytics />}
 				</ThemeProvider>
 			</body>
 		</html>

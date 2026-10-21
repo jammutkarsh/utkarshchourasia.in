@@ -1,6 +1,9 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { ImageResponse } from 'next/og';
+// Inlined at build time: a Worker has no filesystem to read them from.
+import interLightUrl from '../../../assets/fonts/Inter-300.ttf?inline';
+import monoRegularUrl from '../../../assets/fonts/JetBrainsMono-400.ttf?inline';
+// A small copy of public/images/avatar.png; the original is too large to embed.
+import avatarSrc from '../../../public/images/avatar-og.jpg?inline';
 import siteMetadata from '../../site-metadata';
 import { terminalPath } from '../layouts/terminal-path';
 
@@ -36,14 +39,12 @@ interface OgImageOptions {
 	picture?: { src: string; fit: 'contain' | 'cover' };
 }
 
-const fontsDir = path.join(process.cwd(), 'assets', 'fonts');
-// A small copy of public/images/avatar.png; the original is too large to embed.
-const avatarPath = path.join(
-	process.cwd(),
-	'public',
-	'images',
-	'avatar-og.jpg',
-);
+/** The bytes of a base64 data URI. */
+function dataUriBytes(uri: string) {
+	return Buffer.from(uri.slice(uri.indexOf(',') + 1), 'base64');
+}
+const interLight = dataUriBytes(interLightUrl);
+const monoRegular = dataUriBytes(monoRegularUrl);
 
 /** Shortens text to `max` characters, cutting at a word boundary. */
 function truncate(text: string, max: number) {
@@ -62,12 +63,6 @@ export async function renderOgImage({
 	profile = false,
 	picture,
 }: OgImageOptions) {
-	const [interLight, monoRegular, avatar] = await Promise.all([
-		fs.readFile(path.join(fontsDir, 'Inter-300.ttf')),
-		fs.readFile(path.join(fontsDir, 'JetBrainsMono-400.ttf')),
-		fs.readFile(avatarPath),
-	]);
-	const avatarSrc = `data:image/jpeg;base64,${avatar.toString('base64')}`;
 	const titleSize = title.length > 70 ? 48 : title.length > 40 ? 58 : 68;
 	const terminal = truncate(terminalPath(pagePath), 60);
 
