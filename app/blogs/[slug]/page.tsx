@@ -56,6 +56,11 @@ export default async function Blog(props: {
 	return (
 		<>
 			<JsonLd data={jsonLd} />
+			{/* vinext's metadata doesn't emit openGraph.tags; React moves these
+			    into <head>. */}
+			{metadata.tags.map((tag) => (
+				<meta key={tag} property='article:tag' content={tag} />
+			))}
 			<section>
 				<PageTitle>{metadata.title}</PageTitle>
 				<div className='meta mt-4'>
