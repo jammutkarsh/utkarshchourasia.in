@@ -1,6 +1,3 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import sharp from 'sharp';
 import {
 	ogContentType,
 	ogSize,
@@ -58,11 +55,19 @@ async function architecturePng(source: string) {
 	}
 }
 
-/** The hero image (any format sharp reads, e.g. WebP) as a PNG data URI. */
-async function heroPng(hero: string) {
-	const file = await fs.readFile(path.join(process.cwd(), 'public', hero));
-	const png = await sharp(file).resize({ width: 1800 }).png().toBuffer();
-	return `data:image/png;base64,${png.toString('base64')}`;
+// The image renderer can't read WebP, so each hero has a JPEG copy beside it
+// (hero.jpg), inlined at build time: a Worker has no filesystem.
+const heroJpegs = import.meta.glob('/public/static/images/project/*/hero.jpg', {
+	query: '?inline',
+	import: 'default',
+	eager: true,
+}) as Record<string, string>;
+
+/** The JPEG copy of a hero image, as a data URI. */
+function heroJpeg(hero: string) {
+	const src = heroJpegs[`/public${hero.replace(/\.webp$/, '.jpg')}`];
+	if (!src) throw new Error(`No JPEG copy of ${hero} for its link preview`);
+	return src;
 }
 
 /**
@@ -89,7 +94,7 @@ export default async function Image({
 		title: project.name,
 		picture: architecture
 			? { src: architecture, fit: 'contain' }
-			: { src: await heroPng(project.hero), fit: 'cover' },
+			: { src: heroJpeg(project.hero), fit: 'cover' },
 		description: project.summary,
 	});
 }

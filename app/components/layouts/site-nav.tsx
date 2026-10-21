@@ -3,9 +3,10 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Fragment, useEffect, useState, ViewTransition } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import siteMetadata from '../../site-metadata';
 import { openCommandMenu } from '../command-menu';
+import { ViewTransition } from '../view-transition';
 import Breadcrumbs from './breadcrumbs';
 import ThemeSwitch from './theme-switch/theme-switch';
 

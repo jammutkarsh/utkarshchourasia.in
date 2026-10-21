@@ -1,6 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import matter from 'gray-matter';
+import story from '../../../content/story.mdx?raw';
 import type { SketchId } from './sketches';
 
 export interface PhaseMeta {
@@ -35,9 +34,7 @@ export interface Story {
  * phase's prose is the `## <title>` section of the body with the same title.
  */
 export function getStory(): Story {
-	const { data, content } = matter(
-		fs.readFileSync(path.join(process.cwd(), 'content/story.mdx'), 'utf-8'),
-	);
+	const { data, content } = matter(story);
 
 	const sections = new Map<string, string>();
 	for (const chunk of content.split(/^## /m).slice(1)) {

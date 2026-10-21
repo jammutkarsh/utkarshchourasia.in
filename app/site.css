@@ -98,18 +98,6 @@ html.theme-switching::view-transition-new(root) {
 }
 
 /*
-  Code blocks carry colours for both themes (rehype-pretty-code, see
-  app/blogs/utils.ts); show the set that matches the site theme.
-*/
-[data-theme="dark"] [data-rehype-pretty-code-figure] :is(code, span) {
-	color: var(--shiki-dark);
-}
-
-[data-theme="light"] [data-rehype-pretty-code-figure] :is(code, span) {
-	color: var(--shiki-light);
-}
-
-/*
   Tag badges: utc-ds has no pink badge, so add one from its --ds-pink token.
   Its colours are tuned for the dark theme; in light mode, darken the pale
   ones (light blue, yellow, green, pink) so tags stay readable.

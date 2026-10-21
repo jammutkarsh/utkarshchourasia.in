@@ -1,23 +1,7 @@
-const PRODUCTION_URL = 'https://utkarshchourasia.in';
-const PRODUCTION_BRANCH = 'utkarshchourasia-in';
-
-function getBranch(url: string) {
-	// fork-portfolio-git-prod-env-urls-jammutkarshs-projects.vercel.app
-	const startIndex = url.search('git-');
-	const endIndex = url.search('-jammutkarshs-projects.vercel.app');
-	return url.substring(startIndex + 4, endIndex);
-}
-
 function getDeploymentURL() {
-	if (process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production') {
-		return 'http://localhost:3000';
-	}
-	if (getBranch(process.env.VERCEL_BRANCH_URL || '') === PRODUCTION_BRANCH) {
-		return PRODUCTION_URL;
-	}
-	return process.env.NEXT_PUBLIC_VERCEL_URL
-		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-		: PRODUCTION_URL;
+	return process.env.NODE_ENV === 'production'
+		? 'https://utkarshchourasia.in'
+		: 'http://localhost:3000';
 }
 
 const siteMetadata = {

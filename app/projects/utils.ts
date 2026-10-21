@@ -1,9 +1,12 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import matter from 'gray-matter';
 import type { Diagram, Project } from './types';
 
-const PROJECTS_DIR = path.join(process.cwd(), 'content/projects');
+// Bundled at build time: a Worker has no filesystem to read content from.
+const projectFiles = import.meta.glob('/content/projects/*.mdx', {
+	query: '?raw',
+	import: 'default',
+	eager: true,
+}) as Record<string, string>;
 
 /** Markdown to plain text: drop code ticks, emphasis and link targets. */
 function plain(markdown: string) {
@@ -14,11 +17,10 @@ function plain(markdown: string) {
 		.trim();
 }
 
-function readProject(file: string): Project {
-	const slug = path.basename(file, '.mdx');
-	const { data, content } = matter(
-		fs.readFileSync(path.join(PROJECTS_DIR, file), 'utf-8'),
-	);
+function readProject([path, raw]: [string, string]): Project {
+	const file = path.slice(path.lastIndexOf('/') + 1);
+	const slug = file.slice(0, -'.mdx'.length);
+	const { data, content } = matter(raw);
 
 	const missing = [
 		!data.name && 'name',
@@ -70,10 +72,8 @@ function diagrams(value: unknown): Diagram[] | undefined {
 
 /** All projects, by `order` and then by name. */
 export function getProjects(): Project[] {
-	if (!fs.existsSync(PROJECTS_DIR)) return [];
-	return fs
-		.readdirSync(PROJECTS_DIR)
-		.filter((file) => file.endsWith('.mdx') && !file.startsWith('_'))
+	return Object.entries(projectFiles)
+		.filter(([path]) => !path.includes('/_'))
 		.map(readProject)
 		.sort(
 			(a, b) =>

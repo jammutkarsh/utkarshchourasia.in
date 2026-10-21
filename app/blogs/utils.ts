@@ -1,16 +1,18 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import matter from 'gray-matter';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import { cache } from 'react';
 import readingTime from 'reading-time';
-import rehypePrettyCode from 'rehype-pretty-code';
 import { components } from '../components/mdx';
 import { extractHeadings } from './[slug]/extract-headings';
 import TOCInline, { type TOCInlineProps } from './[slug]/toc-inline';
 import { kebabCase } from './kebab-case';
 
-export const POSTS_DIR = path.join(process.cwd(), 'content/blog');
+// Bundled at build time: a Worker has no filesystem to read content from.
+const postFiles = import.meta.glob('/content/blog/*.mdx', {
+	query: '?raw',
+	import: 'default',
+	eager: true,
+}) as Record<string, string>;
 
 export interface BlogPost {
 	metadata: Metadata;
@@ -63,7 +65,7 @@ function matterDataToMetadata(data: Record<string, unknown>): Metadata {
 }
 
 /** Single source of truth for frontmatter: same parser for listings and full posts. */
-function parseMdxSource(raw: string) {
+export function parseMdxSource(raw: string) {
 	const { data, content } = matter(raw);
 	return {
 		metadata: matterDataToMetadata(data as Record<string, unknown>),
@@ -71,20 +73,10 @@ function parseMdxSource(raw: string) {
 	};
 }
 
-function getMDXFiles(dir: string) {
-	return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx');
-}
-
-export function readMDXFile(filePath: string) {
-	const rawContent = fs.readFileSync(filePath, 'utf-8');
-	return parseMdxSource(rawContent);
-}
-
-function getMDXData(dir: string): BlogPost[] {
-	const mdxFiles = getMDXFiles(dir);
-	return mdxFiles.map((file) => {
-		const { metadata, content } = readMDXFile(path.join(dir, file));
-		const slug = path.basename(file, path.extname(file));
+function getMDXData(): BlogPost[] {
+	return Object.entries(postFiles).map(([file, raw]) => {
+		const { metadata, content } = parseMdxSource(raw);
+		const slug = file.slice(file.lastIndexOf('/') + 1, -'.mdx'.length);
 
 		return {
 			metadata,
@@ -96,7 +88,7 @@ function getMDXData(dir: string): BlogPost[] {
 }
 
 export function getPosts(): BlogPost[] {
-	const posts = getMDXData(POSTS_DIR);
+	const posts = getMDXData();
 
 	return posts
 		.filter((post) => !post.metadata.draft)
@@ -145,10 +137,8 @@ export function formatDate(date: string, includeRelative = false) {
 }
 
 export const getPostFromSlug = cache(async (slug: string) => {
-	const raw = await fs.promises.readFile(
-		path.join(POSTS_DIR, `${slug}.mdx`),
-		'utf-8',
-	);
+	const raw = postFiles[`/content/blog/${slug}.mdx`];
+	if (raw === undefined) throw new Error(`No post content/blog/${slug}.mdx`);
 
 	const { metadata, content: mdxBody } = parseMdxSource(raw);
 	const toc = extractHeadings(mdxBody);
@@ -161,17 +151,7 @@ export const getPostFromSlug = cache(async (slug: string) => {
 			blockJS: false,
 			mdxOptions: {
 				remarkPlugins: [],
-				rehypePlugins: [
-					[
-						rehypePrettyCode,
-						{
-							// One theme per site theme (switched in site.css); the code
-							// block background comes from the utc-ds tokens instead.
-							theme: { dark: 'vesper', light: 'github-light' },
-							keepBackground: false,
-						},
-					],
-				],
+				rehypePlugins: [],
 				format: 'mdx',
 			},
 		},

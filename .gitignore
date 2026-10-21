@@ -40,3 +40,7 @@ yarn-error.log*
 .contentlayer
 .env*.local
 *.tsbuildinfo
+/dist/
+.vinext/
+.cloudflare/
+.wrangler/
