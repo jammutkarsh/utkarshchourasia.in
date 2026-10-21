@@ -1,0 +1,9 @@
+# Open Graph images are exported without a file extension.
+/opengraph-image
+  Content-Type: image/png
+/*/opengraph-image
+  Content-Type: image/png
+/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8
+/*/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8

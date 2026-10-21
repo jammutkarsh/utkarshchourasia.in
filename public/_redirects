@@ -1,0 +1,9 @@
+# The about page became the story on the home page.
+/about / 308
+# Tag pages were folded into the blog's tag filter.
+/tags /blogs 308
+/tags/:tag /blogs?tag=:tag 308
+# The blog moved from /blog to /blogs; keep old links (posts, tag filters,
+# Open Graph images) working. Query strings carry over.
+/blog /blogs 308
+/blog/* /blogs/:splat 308
