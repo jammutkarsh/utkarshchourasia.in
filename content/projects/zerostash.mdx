@@ -1,0 +1,24 @@
+---
+name: Zerostash
+hero: /static/images/project/zerostash/hero.webp
+repo: https://github.com/jammutkarsh/zerostash
+website: https://zerostash.utkarshchourasia.in
+stack: [Svelte, TypeScript, Hono, tRPC, Tailwind CSS, Cloudflare Workers, Cloudflare D1, Cloudflare R2, Workers AI, Chrome Extension, Firefox Add-on]
+summary: Free bookmarks in your own Cloudflare account. A Karakeep-compatible server on Cloudflare's free tier, with its own browser extension, so Karakeep's apps work too.
+order: 2
+---
+
+I liked [Karakeep](https://github.com/karakeep-app/karakeep) for saving links, but
+running it means renting a server, and I didn't want to pay ₹600 a month just to keep my
+bookmarks. Most of what I used fits comfortably in Cloudflare's free tier.
+
+Zerostash is a bookmark server that runs in your own Cloudflare account: a Worker with D1
+for the data, R2 for uploaded images and PDFs, and Workers AI for tags and summaries.
+Fork the repo, connect it to Cloudflare, set one secret, and it costs nothing a month.
+Your links never sit on anyone else's servers.
+
+It speaks Karakeep's API, so Karakeep's phone apps, extension and tools work against it
+unchanged. There is also a faster Zerostash extension for Chrome and Firefox that reads the
+preview from the page you're on, and a web app that keeps a copy of your library for
+instant search. Search uses Karakeep's syntax (`#tag`, `is:fav`, `list:"Reading"`), and
+rules, RSS feeds and webhooks file new bookmarks on their own.
