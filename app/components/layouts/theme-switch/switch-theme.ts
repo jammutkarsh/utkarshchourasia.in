@@ -30,20 +30,26 @@ export function switchTheme(
 		flushSync(apply);
 	});
 
-	transition.ready.then(() => {
-		root.animate(
-			{
-				clipPath: [
-					`circle(0px at ${x}px ${y}px)`,
-					`circle(${radius}px at ${x}px ${y}px)`,
-				],
-			},
-			{
-				duration: 500,
-				easing: 'ease-out',
-				pseudoElement: '::view-transition-new(root)',
-			},
-		);
-	});
+	// A view transition started before this one is ready (a second toggle, or
+	// a page navigation) skips it and rejects `ready` with an AbortError. The
+	// theme is still applied, only the reveal is dropped, so ignore that.
+	transition.ready.then(
+		() => {
+			root.animate(
+				{
+					clipPath: [
+						`circle(0px at ${x}px ${y}px)`,
+						`circle(${radius}px at ${x}px ${y}px)`,
+					],
+				},
+				{
+					duration: 500,
+					easing: 'ease-out',
+					pseudoElement: '::view-transition-new(root)',
+				},
+			);
+		},
+		() => {},
+	);
 	transition.finished.finally(() => root.classList.remove('theme-switching'));
 }
