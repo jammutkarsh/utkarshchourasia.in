@@ -60,6 +60,7 @@ or `app/components/mdx.tsx`.
 (upstream `thoughts.tsx`), `app/components/mdx.tsx`, `app/components/layouts/page-container.tsx`,
 `app/components/layouts/theme-switch/theme-switch.tsx`, `app/components/analytics/analytics.tsx`,
 `app/not-found.tsx`, `app/projects/page.tsx`, `app/uses/page.tsx`, `app/uses/uses-title.tsx`,
+`app/components/layouts/icons/sun-icon.tsx` and `moon-icon.tsx` (lint fixes: `aria-hidden`, `biome-ignore`),
 `next.config.ts`, `package.json`, `app/tailwind.css` (only the `@theme` colours: primary,
 gray and black map onto the utc-ds tokens)
 

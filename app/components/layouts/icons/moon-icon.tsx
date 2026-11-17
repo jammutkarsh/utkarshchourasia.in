@@ -59,6 +59,7 @@ const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(
 			}
 		};
 		return (
+			// biome-ignore lint/a11y/noStaticElementInteractions: hover only animates the icon; the theme switch's <button> is the control
 			<div
 				className={classNames(
 					`cursor-pointer select-none p-2 hover:bg-accent rounded-md transition-colors duration-200 flex items-center justify-center`,
@@ -69,6 +70,7 @@ const MoonIcon = forwardRef<MoonIconHandle, MoonIconProps>(
 				{...props}
 			>
 				<motion.svg
+					aria-hidden='true'
 					xmlns='http://www.w3.org/2000/svg'
 					width={size}
 					height={size}
