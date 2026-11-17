@@ -69,6 +69,11 @@ export default function PageTransitions() {
 						setTimeout(resolve, 3000);
 					}),
 			);
+			// React starts its own view transition on some navigations (such as
+			// back to a page already visited), which skips this one and rejects
+			// `ready` with an AbortError. The navigation still completes and
+			// React's transition animates it, so a skip is expected, not an error.
+			transition.ready.catch(() => {});
 			transition.finished.finally(() =>
 				root.classList.remove('page-navigating'),
 			);
