@@ -1,13 +1,12 @@
-import path from 'node:path';
 import { Fragment } from 'react';
-import { readMDXFile } from '../blogs/utils';
+import { parseMdxSource } from '../blogs/utils';
 import Header from '../components/header';
 import { CustomMDX } from '../components/mdx';
 import { createMetadata } from '../lib/create-metadata';
+import source from './content.mdx?raw';
 import UsesTitle from './uses-title';
 
-const contentPath = path.join(process.cwd(), 'app', 'uses', 'content.mdx');
-const { content } = readMDXFile(contentPath);
+const { content } = parseMdxSource(source);
 
 export const metadata = createMetadata({
 	title: 'Uses',

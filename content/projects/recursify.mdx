@@ -1,0 +1,28 @@
+---
+name: Recursify
+hero: /static/images/project/recursify/hero.webp
+repo: https://github.com/jammutkarsh/recursify
+website: https://recursify.utkarshchourasia.in
+stack: [vinext, React, TypeScript, Tailwind CSS, Cloudflare Workers, Cloudflare D1]
+summary: A self-hosted LeetCode tracker that brings each problem back right before you'd forget it, and shows which topics are slipping.
+order: 3
+screenshots:
+  - src: /static/images/project/recursify/library.webp
+    caption: The library, grouped by topic and sorted by weakest recall
+  - src: /static/images/project/recursify/progress.webp
+    caption: Progress across lists, with a year of activity
+---
+
+Solving a LeetCode problem once doesn't mean you can solve it again in an interview a
+month later. Re-solving at the right time is what makes a pattern stick, but keeping
+track of what to revisit, and when, by hand quickly turns into a spreadsheet nobody
+updates.
+
+Recursify schedules the re-solves for you with FSRS spaced repetition. You grade each
+attempt from Forgot to Instant and the next review moves to match, while a topic polygon
+shows at a glance which areas are slipping. Blind 75, LeetCode 75 and NeetCode 150 are
+built in, alongside your own list, and the whole app is keyboard-first.
+
+It's free and self-hosted: you fork it and deploy it to your own Cloudflare account with
+a D1 database, so your data never leaves it. The [demo](https://demo.recursify.utkarshchourasia.in)
+runs without sign-up and keeps its data in your browser.

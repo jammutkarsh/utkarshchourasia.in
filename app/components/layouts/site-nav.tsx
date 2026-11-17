@@ -3,9 +3,10 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Fragment, useEffect, useState, ViewTransition } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import siteMetadata from '../../site-metadata';
 import { openCommandMenu } from '../command-menu';
+import { ViewTransition } from '../view-transition';
 import Breadcrumbs from './breadcrumbs';
 import ThemeSwitch from './theme-switch/theme-switch';
 
@@ -186,7 +187,10 @@ export default function SiteNav() {
 													share='nav-indicator'
 													default='none'
 												>
-													<span className='absolute inset-x-0 bottom-1 h-px bg-primary-500 sm:inset-x-2 sm:bottom-0' />
+													<span
+														className='absolute inset-x-0 bottom-1 h-px bg-primary-500 sm:inset-x-2 sm:bottom-0'
+														data-vt='nav-indicator'
+													/>
 												</ViewTransition>
 											)}
 										</Link>

@@ -49,6 +49,22 @@ html {
 	}
 }
 
+/*
+  Names that React's <ViewTransition> would set, applied by hand while
+  PageTransitions (app/components/page-transitions.tsx) runs a navigation.
+  Temporary: remove with that component once vinext supports view
+  transitions (https://github.com/cloudflare/vinext/issues/2603).
+*/
+html.page-navigating [data-vt="page"] {
+	view-transition-name: page;
+	view-transition-class: page;
+}
+
+html.page-navigating [data-vt="nav-indicator"] {
+	view-transition-name: nav-indicator;
+	view-transition-class: nav-indicator;
+}
+
 /* Theme toggle: switch off the default crossfade; the reveal runs from JS. */
 html.theme-switching::view-transition-old(root),
 html.theme-switching::view-transition-new(root) {
@@ -95,18 +111,6 @@ html.theme-switching::view-transition-new(root) {
 	.story-wide {
 		display: none;
 	}
-}
-
-/*
-  Code blocks carry colours for both themes (rehype-pretty-code, see
-  app/blogs/utils.ts); show the set that matches the site theme.
-*/
-[data-theme="dark"] [data-rehype-pretty-code-figure] :is(code, span) {
-	color: var(--shiki-dark);
-}
-
-[data-theme="light"] [data-rehype-pretty-code-figure] :is(code, span) {
-	color: var(--shiki-light);
 }
 
 /*

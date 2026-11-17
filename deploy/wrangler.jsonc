@@ -1,0 +1,12 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "utkarshchourasia-in",
+  "compatibility_date": "2026-10-20",
+  // Static assets only: `vite build` exports the whole site to dist/client.
+  // Kept outside the project root so vinext doesn't treat the site as a
+  // Worker app.
+  "assets": {
+    "directory": "../dist/client",
+    "not_found_handling": "404-page"
+  }
+}
