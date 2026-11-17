@@ -8,5 +8,9 @@
   "assets": {
     "directory": "../dist/client",
     "not_found_handling": "404-page"
-  }
+  },
+  // Production domain. www -> apex is a Cloudflare redirect rule on the zone.
+  "routes": [{ "pattern": "utkarshchourasia.in", "custom_domain": true }],
+  // Keep the workers.dev URL too; pages' canonical links point at the domain.
+  "workers_dev": true
 }
